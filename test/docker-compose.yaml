@@ -1,0 +1,12 @@
+version: '3.0'
+
+services:
+    calibredb: 
+        image: deafmute/fetch-new:latest
+        environment:
+            - LOG_LEVEL=DEBUG
+            - TRANSFER_TIMEOUT=1
+            - MODE=NEW
+        volumes:
+            - ./source:/source
+            - ./destination:/destination 
