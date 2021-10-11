@@ -1,7 +1,6 @@
 # std 
 from pathlib import Path
 import os
-import subprocess
 import logging
 import time
 import signal
@@ -51,8 +50,11 @@ def copy_file(source: Path, dest: Path) -> None:
         logging.critical("Destination {} is not a directory".format(dest))
     if not source.is_file(): 
         logging.critical("Source {} is not a file".format(source))
-    ret = shutil.copy2(source, dest)
-    logging.info("COPY: Copied file {} to {}".format(source, ret))
+    copied = Path(shutil.copy2(source, dest)).resolve()
+    if config.CHMOD is not None: 
+        copied.chmod(config.CHMOD)
+    os.chown(copied, config.UID, config.GID)
+    logging.info("COPY: Copied file {} to {}".format(source, copied))
 
 def recursive_copy(source: Path, dest: Path) -> None:
     for dirpath, _, fnames in os.walk(str(source)): 
