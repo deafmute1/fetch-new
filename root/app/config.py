@@ -13,7 +13,7 @@ UID = int(os.getenv('UID', -1))
 
 CHMOD= os.getenv('CHOWN')
 if CHMOD is not None: 
-    CHMOD = oct(int(CHMOD, 8)) # convert a string reprsentation of an octal to a python octal, via a python int in base 8.
+    CHMOD = int(CHMOD, 8)
 
 SOURCE = os.getenv('SOURCE', '/source')
 DESTINATION = os.getenv('DESTINATION', '/destination')
